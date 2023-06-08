@@ -8,26 +8,4 @@ As an administrator, I want to be able to manage user accounts, job listings, an
 
 
 
-- templates/
-    - base.html
-    - home.html
-    - job_listings/
-        - job_list.html
-        - job_details.html
-    - accounts/
-        - registration/
-            - register.html
-            - login.html
-    - employer/
-        - dashboard.html
-        - job_form.html
-        - applications.html
-        - messages.html
-    - administrator/
-        - dashboard.html
-        - users.html
-        - job_listings.html
-        - analytics.html
-    - errors/
-        - 404.html
-        - 500.html
+-
