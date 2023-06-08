@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Board</title>
-    <!-- Add your CSS stylesheets and JavaScript files here -->
+    <!-- CSS stylesheets -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- JavaScript files -->
     <script src="{% static 'js/script.js' %}"></script>
 </head>
 <body>
@@ -20,7 +21,7 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/job_listings/">Job Listings</a></li>
                 <li><a href="/accounts/login/">Login</a></li>
-                <!-- Add more navigation links as needed -->
+                <li><a href="/accounts/logout/">Logout</a></li>
             </ul>
         </nav>
     </header>
@@ -28,13 +29,35 @@
     <!-- Content -->
     <main>
         {% block content %}
-        <!-- Content specific to each page will go here -->
+        
         {% endblock %}
     </main>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2023 Job Board. All rights reserved.</p>
+        <div class="footer-container">
+            <div class="footer-left">
+                <h3>About Job Board</h3>
+                <p>Job Board is a platform that connects job seekers with employers. We provide a wide range of job listings and help candidates find their dream jobs.</p>
+            </div>
+            <div class="footer-middle">
+                <h3>Contact Us</h3>
+                <p>Email: info@jobboard.com</p>
+                <p>Phone: 0720202020</p>
+                <p>Address: Nairobi, kenya</p>
+            </div>
+            <div class="footer-right">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><img src="{% static 'images/facebook.png' %}" alt="Facebook"></a>
+                    <a href="#"><img src="{% static 'images/twitter.png' %}" alt="Twitter"></a>
+                    <a href="#"><img src="{% static 'images/instagram.png' %}" alt="Instagram"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Job Board. All rights reserved.</p>
+        </div>
     </footer>
 </body>
 </html>
