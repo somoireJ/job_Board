@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="job-form-section">
+        <div class="container">
+            <h2 class="section-title">Post a Job</h2>
+            <div class="job-form">
+                <form method="post" action="{% url 'myapp:post_job' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="job_title">Job Title</label>
+                        <input type="text" id="job_title" name="job_title" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="job_description">Job Description</label>
+                        <textarea id="job_description" name="job_description" class="form-control" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="requirements">Requirements</label>
+                        <textarea id="requirements" name="requirements" class="form-control" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="application_instructions">Application Instructions</label>
+                        <textarea id="application_instructions" name="application_instructions" class="form-control" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Post Job</button>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

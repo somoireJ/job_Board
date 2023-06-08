@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="messages-section">
+        <div class="container">
+            <h2 class="section-title">Messages</h2>
+            <div class="messages-list">
+                {% if messages %}
+                    <!-- Display a list of messages -->
+                    {% for message in messages %}
+                        <div class="message">{{ message }}</div>
+                    {% endfor %}
+                {% else %}
+                    <p>No messages available.</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

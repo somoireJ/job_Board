@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="dashboard-section">
+        <div class="container">
+            <h2 class="section-title">Employer Dashboard</h2>
+            <div class="dashboard-menu">
+                <ul>
+                    <li><a href="{% url 'myapp:post_job' %}">Post a Job</a></li>
+                    <li><a href="{% url 'myapp:applications' %}">Received Applications</a></li>
+                    <li><a href="{% url 'myapp:messages' %}">Messages</a></li>
+                </ul>
+            </div>
+            <div class="dashboard-content">
+                <!-- Display specific content based on selected menu item -->
+                {% block dashboard_content %}{% endblock %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

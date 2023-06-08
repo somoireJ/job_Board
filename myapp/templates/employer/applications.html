@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="applications-section">
+        <div class="container">
+            <h2 class="section-title">Received Applications</h2>
+            <div class="applications-list">
+                <!-- Display a list of received applications -->
+                {% for application in applications %}
+                    <div class="application-item">
+                        <h3>{{ application.job_title }}</h3>
+                        <p>{{ application.applicant_name }}</p>
+                        <p>{{ application.application_date }}</p>
+                        <a href="{% url 'view_application' application.id %}">View Details</a>
+                    </div>
+                {% empty %}
+                    <p>No applications found.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
