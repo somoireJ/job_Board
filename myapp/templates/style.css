@@ -1,0 +1,120 @@
+/* Global Styles */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Header Styles */
+  
+  .header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+  }
+  
+  .header h1 {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  /* Navigation Styles */
+  
+  .navbar {
+    background-color: #f4f4f4;
+    padding: 10px;
+  }
+  
+  .navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar li {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .navbar a {
+    color: #333;
+    text-decoration: none;
+    padding: 5px;
+  }
+  
+  .navbar a:hover {
+    color: #666;
+  }
+  
+  /* Hero Section Styles */
+  
+  .hero {
+    background-color: #f4f4f4;
+    padding: 50px;
+    text-align: center;
+  }
+  
+  .hero h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .hero p {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+  
+  /* Job Listings Styles */
+  
+  .job-listings {
+    margin-top: 30px;
+  }
+  
+  .job-listing {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 20px;
+  }
+  
+  .job-listing h3 {
+    font-size: 20px;
+    margin: 0;
+  }
+  
+  .job-listing p {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .job-listing .btn {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+  }
+  
+  .job-listing .btn:hover {
+    background-color: #666;
+  }
+  
+  /* Footer Styles */
+  
+  .footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .footer p {
+    margin: 0;
+  }
+  
