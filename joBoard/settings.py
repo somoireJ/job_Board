@@ -103,7 +103,7 @@ WSGI_APPLICATION = 'joBoard.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'capstonefive',
+        'NAME': 'capstonefive5',
         'USER': 'root',
         'PASSWORD': 'SOMOIRE71',
         'HOST': 'localhost',

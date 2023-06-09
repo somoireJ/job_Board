@@ -19,7 +19,7 @@ def job_listings(request):
 
 @login_required
 def job_details(request, job_id):
-    job = JobListing.objects.get(pk=job_id)
+    job = JobListing.objects.get(pk=job_id) 
     return render(request, 'job_listings/job_details.html', {'job': job})
 
 
