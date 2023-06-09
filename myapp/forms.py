@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from .models import User
 from .models import JobListing, UserProfile, JobApplication
 
 class JobListingForm(forms.ModelForm):
@@ -35,7 +36,6 @@ class AdminJobListingForm(forms.ModelForm):
     class Meta:
         model = JobListing
         fields = ('title', 'description', 'location', 'industry', 'job_type')
-
 
 class JobApplicationForm(forms.ModelForm):
     class Meta:
