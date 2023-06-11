@@ -55,7 +55,7 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL="myapp.User"
 ACCOUNT_UNIQUE_EMAIL=True
-LOGIN_REDIRECT_URL = 'employer/dashboard'
+LOGIN_REDIRECT_URL = '/home'
 LOGIN_URL = 'myapp:login'
 # ...
 
