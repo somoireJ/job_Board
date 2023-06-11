@@ -1,97 +1,134 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required, user_passes_test
+from myapp.decorators import employer_required, applicant_required
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm
-from .forms import JobListingForm, UserRegistrationForm, UserProfileForm, LoginForm, MessageForm, AdminUserForm, AdminJobListingForm, JobApplicationForm
-from .models import JobListing, UserProfile, JobApplication, Message
+from .forms import JobApplicationForm, UserRegistrationForm, UserLoginForm, JobListingForm
+from .models import JobListing, JobApplication, Message
+from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
 
-
+# Home page
 def home(request):
     return render(request, 'home.html')
 
-
-@login_required
+# Job listings
 def job_listings(request):
-    job_list = JobListing.objects.all()
-    return render(request, 'job_listings/job_list.html', {'job_list': job_list})
+    jobs = JobListing.objects.all()
+    return render(request, 'job_listings/job_list.html', {'jobs': jobs})
 
-
-@login_required
+# Job details
 def job_details(request, job_id):
-    job = JobListing.objects.get(pk=job_id) 
+    job = get_object_or_404(JobListing, id=job_id)
     return render(request, 'job_listings/job_details.html', {'job': job})
 
-
+# User registration
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, f'Registration successful for {username}. You can now log in.')
-            return redirect('login')
+            messages.success(request, 'Your account has been created successfully.')
+            return redirect('myapp:login')
     else:
         form = UserRegistrationForm()
     return render(request, 'registration/register.html', {'form': form})
 
 
-def logout_view(request):
+
+# User login
+def user_login(request):
+    if request.method == 'POST':
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect(reverse('myapp:home'))
+            else:
+                messages.error(request, 'Invalid username or password.')
+    else:
+        form = UserLoginForm()
+    return render(request, 'registration/login.html', {'form': form})
+
+
+# User logout
+@login_required
+def user_logout(request):
     logout(request)
-    return redirect('home')
+    return redirect('myapp:home')
 
-
+# Employer dashboard
 @login_required
 def employer_dashboard(request):
-    job_list = JobListing.objects.filter(owner=request.user)
-    return render(request, 'employer/dashboard.html', {'job_list': job_list})
+    job_listings = JobListing.objects.filter(owner=request.user)
+    return render(request, 'employer/dashboard.html', {'job_listings': job_listings})
 
-
+# Post a job
 @login_required
 def post_job(request):
     if request.method == 'POST':
         form = JobListingForm(request.POST)
         if form.is_valid():
-            job = form.save(commit=False)
-            job.user = request.user
-            job.save()
+            job_listing = form.save(commit=False)
+            job_listing.owner = request.user
+            job_listing.save()
             messages.success(request, 'Job posted successfully.')
-            return redirect('employer_dashboard')
+            return redirect('myapp:dashboard')
     else:
         form = JobListingForm()
     return render(request, 'employer/job_form.html', {'form': form})
 
-
+# View received applications
 @login_required
-def messages(request):
-    user_messages = Message.objects.filter(user=request.user)
-    return render(request, 'employer/messages.html', {'messages': user_messages})
+def applications(request):
+    job_listings = JobListing.objects.filter(owner=request.user)
+    return render(request, 'employer/applications.html', {'job_listings': job_listings})
 
+# View application details
+@login_required
+def view_application(request, job_id, application_id):
+    job_listing = get_object_or_404(JobListing, id=job_id, owner=request.user)
+    application = get_object_or_404(JobApplication, id=application_id, job_listing=job_listing)
+    return render(request, 'employer/applications.html', {'application': application})
 
+# Apply for a job
 @login_required
 def apply_job(request, job_id):
-    job = JobListing.objects.get(pk=job_id)
+    job = get_object_or_404(JobListing, id=job_id)
+
     if request.method == 'POST':
         form = JobApplicationForm(request.POST, request.FILES)
         if form.is_valid():
             application = form.save(commit=False)
-            application.job = job
-            application.user = request.user
+            application.job_listing = job
+            application.applicant = request.user
             application.save()
-            messages.success(request, 'Job application submitted successfully.')
-            return redirect('job_listings/job_details', job_id=job_id)
+            messages.success(request, 'Application submitted successfully.')
+            return redirect('myapp:job_details', job_id=job_id)
     else:
         form = JobApplicationForm()
-    return render(request, 'apply_job.html', {'form': form, 'job': job})
+    return render(request, 'employer/application.html', {'form': form, 'job': job})
 
-
-
+# Send message
 @login_required
-def applications(request):
-    job_applications = JobApplication.objects.filter(job_listing__owner=request.user)
+def send_message(request, application_id):
+    application = get_object_or_404(JobApplication, id=application_id, applicant=request.user)
 
-    context = {
-        'job_applications': job_applications,
-    }
-    return render(request, 'employer/applications.html', context)
+    if request.method == 'POST':
+        message_text = request.POST.get('message')
+        if message_text:
+            message = Message(application=application, sender=request.user, text=message_text)
+            message.save()
+            messages.success(request, 'Message sent successfully.')
+            return redirect('myapp:application_details', application_id=application_id)
 
+    return render(request, 'employer/messages.html', {'application': application})
+
+# View application details (applicant)
+@login_required
+def application_details(request, application_id):
+    application = get_object_or_404(JobApplication, id=application_id, applicant=request.user)
+    messages = Message.objects.filter(application=application)
+    return render(request, 'application.html', {'application': application, 'messages': messages})

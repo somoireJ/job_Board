@@ -10,7 +10,7 @@
                 <p>{{ job.description }}</p>
                 <p>{{ job.requirements }}</p>
                 <p>{{ job.application_instructions }}</p>
-                <a href="{% url 'apply_job' job.id %}" class="btn btn-primary">Apply Now</a>
+                <a href="{% url 'myapp:apply_job' job.id %}" class="btn btn-primary">Apply Now</a>
             </div>
         </div>
     </section>

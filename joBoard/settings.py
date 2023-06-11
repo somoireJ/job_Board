@@ -55,6 +55,8 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL="myapp.User"
 ACCOUNT_UNIQUE_EMAIL=True
+LOGIN_REDIRECT_URL = 'employer/dashboard'
+LOGIN_URL = 'myapp:login'
 # ...
 
 MIDDLEWARE = [
@@ -191,3 +193,6 @@ AUTHENTICATION_BACKENDS = [
 # Email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# CORS settings
+CORS_ALLOW_ALL_ORIGINS = True
+AllowAny = True

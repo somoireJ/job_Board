@@ -7,8 +7,94 @@
     <title>Job Board</title>
     <!-- CSS stylesheets -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <!-- JavaScript files -->
     <script src="{% static 'js/script.js' %}"></script>
+    <style>
+        /* Custom CSS styles */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header styles */
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* Main content styles */
+        main {
+            padding: 20px;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-container div {
+            flex-basis: 30%;
+        }
+
+        .footer-container h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .footer-container p {
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .footer-bottom {
+            background-color: #222;
+            padding: 10px 0;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+            text-align: center;
+        }
+
+        /* Additional custom styles */
+     
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -19,7 +105,8 @@
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/job_listings/">Job Listings</a></li>
+                <li><a href="/job_list/">Job Listings</a></li>
+                <li><a href="/employer/dashboard/">Employer<br/>Dashboard</a></li>
                 <li><a href="/registration/login/">Login</a></li>
                 <li><a href="/registration/logout/">Logout</a></li>
             </ul>
@@ -44,7 +131,7 @@
                 <h3>Contact Us</h3>
                 <p>Email: info@jobboard.com</p>
                 <p>Phone: 0720202020</p>
-                <p>Address: Nairobi, kenya</p>
+                <p>Address: Nairobi, Kenya</p>
             </div>
             <div class="footer-right">
                 <h3>Follow Us</h3>
