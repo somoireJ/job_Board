@@ -19,15 +19,19 @@
             padding: 0;
         }
 
-        /* Header styles */
+     /* Header styles  */
         header {
-            background-color: #333;
+            background-image: url("{% static 'images/background.png' %}");
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
             color: #fff;
             padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
+
 
         .logo {
             font-size: 24px;
@@ -54,10 +58,13 @@
 
         /* Footer styles */
         footer {
-            background-color: #333;
+            background-image: url("{% static 'images/background.png' %}");
+            background-size: cover;
+            background-position: center;
             color: #fff;
             padding: 40px 0;
             text-align: center;
+
         }
 
         .footer-container {
@@ -91,6 +98,22 @@
             margin: 0;
             text-align: center;
         }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            }
+
+        .social-icons a {
+            margin: 0 5px;
+            }
+
+        .social-icons img {
+            width: 30px;
+            height: 30px;
+            }
+
 
         /* Additional custom styles */
      
@@ -138,7 +161,7 @@
                 <div class="social-icons">
                     <a href="#"><img src="{% static 'images/facebook.png' %}" alt="Facebook"></a>
                     <a href="#"><img src="{% static 'images/twitter.png' %}" alt="Twitter"></a>
-                    <a href="#"><img src="{% static 'images/instagram.png' %}" alt="Instagram"></a>
+                    <a href="#"><img src="{% static 'images/linkedin.png' %}" alt="linkedin"></a>
                 </div>
             </div>
         </div>
