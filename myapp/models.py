@@ -8,8 +8,9 @@ from rest_framework.authtoken.models import Token
 
 class User(AbstractUser):
     email = models.EmailField(unique=True)
-    is_applicant = models.BooleanField(default=False)
-    is_employer = models.BooleanField(default=False)
+    is_applicant = models.BooleanField('applicant status', default=False)
+    is_employer = models.BooleanField('employer status', default=False)
+    user_type = models.CharField(max_length=20, choices=[('applicant', 'Applicant'), ('employer', 'Employer')], default='applicant')
 
     def __str__(self):
         return self.username
@@ -19,6 +20,7 @@ class User(AbstractUser):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+
 
 
 class Applicant(models.Model):

@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse, HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
-from myapp.decorators import employer_required, applicant_required
-from django.contrib import messages
-from .forms import JobApplicationForm, UserRegistrationForm, UserLoginForm, JobListingForm
-from .models import JobListing, JobApplication, Message
-from django.contrib.auth import authenticate, login, logout
+from myapp.decorators import employer_required, applicant_required, login_required 
+from django.contrib import messages, auth
+from .forms import JobApplicationForm, UserRegistrationForm, UserLoginForm, JobListingForm, MessageForm
+from .models import JobListing, JobApplication, Message, User, Employer, Applicant
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.urls import reverse
+from rest_framework.views import APIView, status, Response
+from rest_framework.response import Response
 
 # Home page
 def home(request):
@@ -22,6 +24,23 @@ def job_details(request, job_id):
     return render(request, 'job_listings/job_details.html', {'job': job})
 
 # User registration
+
+# def register(request):
+#     if request.method == 'POST':
+#         form = UserRegistrationForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Your account has been created successfully.')
+#             return redirect('myapp:login')
+#         else:
+#             error_message = "Registration failed. Please correct the errors below."
+#             messages.error(request, error_message)
+#     else:
+#         form = UserRegistrationForm()
+#     return render(request, 'registration/register.html', {'form': form})
+
+
+# User registration
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
@@ -31,23 +50,28 @@ def register(request):
             return redirect('myapp:login')
     else:
         form = UserRegistrationForm()
-    return render(request, 'registration/register.html', {'form': form})
 
+    # Add the invalid form to the context to display the errors
+    context = {'form': form}
+    return render(request, 'registration/register.html', context)
 
 
 # User login
 def user_login(request):
     if request.method == 'POST':
-        form = UserLoginForm(request.POST)
+        form = UserLoginForm(data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(request, username=username, password=password)
+            print('User:', user)
             if user is not None:
                 login(request, user)
+                print('User logged in:', user)
                 return redirect(reverse('myapp:home'))
             else:
                 messages.error(request, 'Invalid username or password.')
+                print('User not logged in:', user)
     else:
         form = UserLoginForm()
     return render(request, 'registration/login.html', {'form': form})
@@ -57,6 +81,7 @@ def user_login(request):
 @login_required
 def user_logout(request):
     logout(request)
+    messages.success(request, 'You have been logged out successfully.')
     return redirect('myapp:home')
 
 # Employer dashboard
